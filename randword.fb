@@ -1,7 +1,7 @@
 DATA conu() B.="BCDFGHJKLMNPQRSTVWXZ"
 DATA vow() B.="aeiouy"
 
-
+' Generate and print names here
 for i=0 to 15
 PL$ = ""
 exec fname: ' generate last name
@@ -14,7 +14,7 @@ exec fname: '  ' generate first name
 ? PL$
 next
 
-PL$ = ""
+
 ' TODO:  
 'added rule for male ending in i, female ending in a, other ending in anything but a or i
 '  Jh, Bl, Br, Kh, 

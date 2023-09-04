@@ -6,7 +6,7 @@ for i=0 to 15
 PL$ = ""
 exec fname: ' generate last name
 if rand(2) = 1
-    exec fname: ' generate long last name
+    exec fname: ' generate longer last name
 endif
 ? PL$; ", ";
 PL$ = ""

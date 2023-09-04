@@ -1,34 +1,44 @@
+' Programmer: Ronald McDaniel aka Skulltip Productions
+' License:  GNU General Public License v3.0
+
 DATA conu() B.="BCDFGHJKLMNPQRSTVWXZ"
 DATA vow() B.="aeiouy"
 
-' Generate and print names here
+retv = 0
+
+' Generate and print 15 names in this fornext loop
 for i=0 to 15
-PL$ = ""
-exec fname: ' generate last name
-if rand(2) = 1
-    exec fname: ' generate longer last name
-endif
-? PL$; ", ";
-PL$ = ""
-exec fname: '  ' generate first name
-? PL$
+    PL$ = ""
+    exec fname: ' generate last name
+    if rand(2) = 1
+        exec fname: ' generate longer last name
+        if rand(2) = 1:
+            EXEC _rnd 5:PL$=+chr$(conu(retv)+32): ' if longer name, add consonant to end
+        endif
+    endif
+    ? PL$; ", ";
+    PL$ = ""
+    exec fname: '  ' generate first name
+    ? PL$
 next
 
 
 ' TODO:  
-'added rule for male ending in i, female ending in a, other ending in anything but a or i
+' DONE:  added rule for male ending in i, female ending in a, other ending in anything but a or i
 '  Jh, Bl, Br, Kh, 
 ' DONE:  Th, Tr, Ch,Cl,Cr,Cy,Cz,Sh, St, Sc, Sl, Sy,Pl, Pr, Ph, Ps, 
  
 repeat:until key()
+'END OF PROGRAM
 
 PROC fname
-c1 = rand(19)+1
-v1 = rand(5)+1
-c2 = rand(19)+1
-v2 = rand(5)+1
+ EXEC _rnd 20: c1=retv
+ EXEC _rnd 5: v1=retv
+ EXEC _rnd 19: c2=retv
+ EXEC _rnd 5: v2=retv
+
 if v2<>1 and v2<>3:
-    v = rand(3)
+    EXEC _rnd 3: v=retv
         if v = 1: 'female
             v2 = 1
         elif v = 2: 'male
@@ -104,5 +114,8 @@ else:
     PL$ =+chr$(conu(C2)+32)
     PL$ =+chr$(vow(v2))
 endif
+endproc
 
+PROC _rnd ARX
+ retv=rand(ARX)+1
 endproc

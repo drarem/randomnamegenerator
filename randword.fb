@@ -1,0 +1,108 @@
+DATA conu() B.="BCDFGHJKLMNPQRSTVWXZ"
+DATA vow() B.="aeiouy"
+
+
+for i=0 to 15
+PL$ = ""
+exec fname: ' generate last name
+if rand(2) = 1
+    exec fname: ' generate long last name
+endif
+? PL$; ", ";
+PL$ = ""
+exec fname: '  ' generate first name
+? PL$
+next
+
+PL$ = ""
+' TODO:  
+'added rule for male ending in i, female ending in a, other ending in anything but a or i
+'  Jh, Bl, Br, Kh, 
+' DONE:  Th, Tr, Ch,Cl,Cr,Cy,Cz,Sh, St, Sc, Sl, Sy,Pl, Pr, Ph, Ps, 
+ 
+repeat:until key()
+
+PROC fname
+c1 = rand(19)+1
+v1 = rand(5)+1
+c2 = rand(19)+1
+v2 = rand(5)+1
+if v2<>1 and v2<>3:
+    v = rand(3)
+        if v = 1: 'female
+            v2 = 1
+        elif v = 2: 'male
+            v2 = 3
+        endif: ' else other
+endif
+
+' Add 32 to uppercase to get lower case
+if c1 = 16: 'T
+    PL$ =+chr$(conu(c1))
+    if rand(2)=1:
+        PL$ =+chr$(conu(14)+32): 'r
+    else:
+        PL$ =+chr$(conu(6)+32): 'h
+    endif
+     PL$ =+chr$(vow(v1))
+    PL$ =+chr$(conu(C2)+32)
+    PL$ =+chr$(vow(v2))
+elif c1 =  12: 'P
+    PL$ =+chr$(conu(c1))
+    v = rand(6)+1
+    if v=1:
+        PL$ =+chr$(conu(6)+32): 'h
+    elif v=2:
+        PL$ =+chr$(conu(9)+32): 'l
+    elif v=3:
+        PL$ =+chr$(conu(15)+32): 's
+    elif v=4:
+        PL$ =+chr$(vow(6)): 'y
+    elif v=5:
+        PL$ =+chr$(conu(14)+32): 'tr
+    endif
+     PL$ =+chr$(vow(v1))
+    PL$ =+chr$(conu(C2)+32)
+    PL$ =+chr$(vow(v2))
+elif c1 =  15: 'S
+    PL$ =+chr$(conu(c1))
+    v = rand(6)+1
+    if v=1:
+        PL$ =+chr$(conu(6)+32): 'h
+    elif v=2:
+        PL$ =+chr$(conu(9)+32): 'l
+    elif v=3:
+        PL$ =+chr$(conu(2)+32): 'c
+    elif v=4:
+        PL$ =+chr$(vow(6)): 'y
+    elif v=5:
+        PL$ =+chr$(conu(16)+32): 't
+    endif
+     PL$ =+chr$(vow(v1))
+    PL$ =+chr$(conu(C2)+32)
+    PL$ =+chr$(vow(v2))
+elif c1 = 2: 'C
+    PL$ =+chr$(conu(c1))
+    v=rand(6)+1
+    if v=1:
+        PL$ =+chr$(conu(6)+32): 'h
+    elif v=2:
+        PL$ =+chr$(conu(9)+32): 'l
+    elif v=3:
+        PL$ =+chr$(conu(14)+32): 'r
+    elif v=4:
+        PL$ =+chr$(vow(6)): 'y
+    elif v=5:
+        PL$ =+chr$(conu(20)+32): 'z
+    endif
+    PL$ =+chr$(vow(v1))
+    PL$ =+chr$(conu(C2)+32)
+    PL$ =+chr$(vow(v2))
+else:
+    PL$ =+chr$(conu(c1))
+    PL$ =+chr$(vow(v1))
+    PL$ =+chr$(conu(C2)+32)
+    PL$ =+chr$(vow(v2))
+endif
+
+endproc

@@ -15,7 +15,7 @@ for i=0 to 15
     if rand(2) = 1
         @fname: ' generate longer last name
         if rand(2) = 1:
-            @_rnd 5:PL$=+chr$(conu(retv)+32): ' if longer name, add consonant to end
+            @_rnd 5:PL$=+chr$(conl(retv)): ' if longer name, add consonant to end
         endif
     endif
     ? PL$; ", ";

@@ -1,6 +1,10 @@
 ' Programmer: Ronald McDaniel aka Skulltip Productions
 ' License:  GNU General Public License v3.0
 ' September 5th, 2023
+' Usage -
+'  proc fname generates 4 letters, using a consonant, vowel, consonant, and vowel. C1V1C2V2
+'  certain random rules will add an extra letter, such as an 'h' after an S or T, etc - C1C2V1C3V2
+
 
 DATA conu() B.="BCDFGHJKLMNPQRSTVWXZ"
 DATA conl() B.="bcdfghjklmnpqrstvwxz"
@@ -8,14 +12,14 @@ DATA vow() B.="aeiouy"
 
 retv = 0
 
-' Generate and print 15 names in this fornext loop
+' Generate and print 15 names in this fornext loop to illustrate the usage
 for i=0 to 15
     PL$ = ""
     @fname: ' generate last name
     if rand(2) = 1
         @fname: ' generate longer last name
         if rand(2) = 1:
-            @_rnd 5:PL$=+chr$(conl(retv)): ' if longer name, add consonant to end
+            @_rnd 20:PL$=+chr$(conl(retv)): ' if longer name, add consonant to end
         endif
     endif
     ? PL$; ", ";
@@ -26,10 +30,12 @@ next
 
 
 ' TODO:
+'  add ending consonant letter to first name randomly, and following endings to the last names:
+'    rn,ss,ts,th,vs,
 ' DONE:  sacrifice a little space to remove the addition of the character to get lower case
 ' DONE:  added rule for male ending in i, female ending in a, other ending in anything but a or i
 '  Jh, Bl, Br, Kh, 
-' DONE:  Th, Tr, Ch,Cl,Cr,Cy,Cz,Sh, St, Sc, Sl, Sy,Pl, Pr, Ph, Ps, 
+' DONE:  Th, Tr, Ch,Cl,Cr,Cy,Cz,Sh, St, Sc, Sl, Sk, Sm, Sn,Pl, Pr, Ph, Ps, 
  
 repeat:until key()
 'END OF PROGRAM
@@ -41,15 +47,23 @@ PROC fname
  @_rnd 5: v2=retv
 
 if v2<>1 and v2<>3:
-    @_rnd 3: v=retv
+'can adjust for certain first name ending vowels here, first names are 4 letters
+    @_rnd 5: v=retv
         if v = 1: 'female
             v2 = 1
         elif v = 2: 'male
             v2 = 3
+        elif v = 3: 'othera
+            v2 = 2
+        elif v = 4: 'otherb
+            v2 = 4
+        elif v = 5: 'otherc
+            v2 = 5
         endif: ' else other
 endif
 
-' Add 32 to uppercase to get lower case
+'After each initial character (C1), randomly add a secondary consonant
+' such as:  Tr, Th, Ph, Pl, Ps, Py, Pr, etc
 if c1 = 16: 'T
     PL$ =+chr$(conu(c1))
     if rand(2)=1:
@@ -72,14 +86,14 @@ elif c1 =  12: 'P
     elif v=4:
         PL$ =+chr$(vow(6)): 'y
     elif v=5:
-        PL$ =+chr$(conl(14)): 'tr
+        PL$ =+chr$(conl(14)): 'r
     endif
-     PL$ =+chr$(vow(v1))
+    PL$ =+chr$(vow(v1))
     PL$ =+chr$(conl(C2))
     PL$ =+chr$(vow(v2))
 elif c1 =  15: 'S
     PL$ =+chr$(conu(c1))
-    v = rand(6)+1
+    v = rand(7)+1
     if v=1:
         PL$ =+chr$(conl(6)): 'h
     elif v=2:
@@ -87,9 +101,13 @@ elif c1 =  15: 'S
     elif v=3:
         PL$ =+chr$(conl(2)): 'c
     elif v=4:
-        PL$ =+chr$(vow(6)): 'y
+        PL$ =+chr$(conl(8)): 'k
     elif v=5:
         PL$ =+chr$(conl(16)): 't
+    elif v=6:
+        PL$ =+chr$(conl(10)): 'm
+    elif v=7:
+        PL$ =+chr$(conl(11)): 'n    
     endif
      PL$ =+chr$(vow(v1))
     PL$ =+chr$(conl(C2))
